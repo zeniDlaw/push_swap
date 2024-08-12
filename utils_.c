@@ -1,127 +1,57 @@
 #include <stdlib.h>
-#include <stdbool.h>
 #include "ft_printf/libftprintf.h"
 #include "libft/libft.h"
+#include <limits.h>
 #include "push_swap.h"
 
-char *ft_strcat(char *dest, const char *src) 
+int ft_issorted(t_list **stack)
 {
-    char *dest_end;
-    dest_end = dest;
-    while (*dest_end != '\0') {
-        dest_end++;
-    }
-    while (*src != '\0') {
-        *dest_end = *src;
-        dest_end++;
-        src++;
-    }
+    t_list *head;
 
-    *dest_end = '\0';
-
-    return dest;
+    head = *stack;
+    while (head && head->next)
+    {
+        if (head->value > head->next->value)
+            return (0);
+        head = head->next;
+    }
+    return (1);
 }
 
-void free_tokens(char **tokens, int count)
+int find_distance(t_list **stack, int index)
 {
-    int i;
+    t_list *head;
+    int distance;
 
-    i = 0;
-    while (i < count)
+    distance = 0;
+    head = *stack;
+    while (head)
     {
-        free(tokens[i]);
-        i++;
+        if (head->index == index)
+            break;
+        distance++;
+        head = head->next;
     }
-    free(tokens);
+    return (distance);
 }
 
-char *ft_strncpy(char *dest, const char *src, size_t n) 
+void make_top(t_list **stack, int distance)
 {
-    size_t i;
+    t_list *head;
+    int temp;
 
-    for (i = 0; i < n && src[i] != '\0'; i++) {
-        dest[i] = src[i];
-    }
-
-    for (; i < n; i++) {
-        dest[i] = '\0';
-    }
-
-    return dest;
-}
-
-char **split_quotes(char *str, int *token_count)
-{
-    int in_quote;
-    int token_index;
-    int len;
-    const char *start;
-
-    in_quote = 0;
-    token_index = 0;
-    len = 0;
-    start = NULL;
-    *token_count = token_counter(str);
-    char **tokens;
-
-    tokens = malloc(*token_count * sizeof(char *));
-    if (!tokens)
+    if (distance == 0)
+        return;
+    head = *stack;
+    temp = ft_lstsize(head) - distance;
+    if (distance <= (ft_lstsize(head) / 2))
     {
-        ft_putstr_fd("Memory Allocation Failed for Tokens\n", 2);
-        exit(EXIT_FAILURE);
+        while (distance-- > 0)
+            ra(stack);
     }
-    while (*str)
+    else
     {
-        if (*str == '"')
-        {
-            in_quote = !in_quote;
-            if (!in_quote && start)
-            {
-                len = str - start;
-                tokens[token_index] = (char *)malloc(len + 1);
-                if (!tokens[token_index])
-                {
-                    ft_putstr_fd("Failed Memory Allocation\n", 2);
-                    exit(EXIT_FAILURE);
-                }
-                ft_strncpy(tokens[token_index], start, len);
-                tokens[token_index][len] = '\0';
-                token_index++;
-                start = NULL;
-            }
-            else if (!start)
-                start = str;
-            str++;
-        }
-        if (start)
-        {
-            len = 0;
-            len = str - start;
-            tokens[token_index] = (char *)malloc(len + 1);
-            if (!tokens[token_index])
-            {
-                ft_putstr_fd("Faild Memory Allocation\n", 2);
-                exit(EXIT_FAILURE);
-            }
-            ft_strncpy(tokens[token_index], start, len);
-            tokens[token_index][len] = '\0';
-        }
+        while (temp-- > 0)
+            rra(stack);
     }
-    return (tokens);
-}
-
-char **split_noquotes(int argc, char **argv, int *token_count)
-{
-    int i;
-    char **tokens;
-
-    i = 1;
-    tokens = malloc(sizeof(char *) * (argc - 1));
-    while (i < argc)
-    {
-        tokens[i - 1] = ft_strdup(argv[i]);
-        i++;
-    }
-    *token_count = argc - 1;
-    return (tokens);
 }
