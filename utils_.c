@@ -18,6 +18,17 @@ int ft_issorted(t_list **stack)
     return (1);
 }
 
+void ft_free(char **str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+        i++;
+    while (i >= 0)
+        free(str[i--]);
+}
+
 int find_distance(t_list **stack, int index)
 {
     t_list *head;

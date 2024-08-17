@@ -31,7 +31,7 @@ int sa(t_list **stackA)
     return(0);
 }
 
-int sb(t_stack **stackB)
+int sb(t_list **stackB)
 {
     if (swap(stackB) == -1)
         return(-1);

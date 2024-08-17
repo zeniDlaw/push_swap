@@ -10,7 +10,7 @@ static int find_min(t_list **stack, int value)
     while (head->next)
     {
         head = head->next;
-        if ((head->index < min) && head->index != value);
+        if ((head->index < min) && head->index != value)
             min = head->index;
     }
     return (min);
@@ -68,7 +68,7 @@ static void sort_4(t_list **stackA, t_list **stackB)
     }
     else if (distance == 3)
         rra(stackA);
-    if (ft_issorted(stackA));
+    if (ft_issorted(stackA))
         return;
     pb(stackA, stackB);
     sort_3(stackA);
@@ -94,7 +94,7 @@ void sort_5(t_list **stackA, t_list **stackB)
     }
     else if (distance == 4)
         rra(stackA);
-    if (ft_issorted(stackA));
+    if (ft_issorted(stackA))
         return;
     pb(stackA, stackB);
     sort_4(stackA, stackB);

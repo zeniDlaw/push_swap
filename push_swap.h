@@ -1,25 +1,26 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-typedef struct s_List
+#include <stdlib.h>
+
+typedef struct s_list
 {
     int     value;
     int     index;
     struct s_list *next;
 }               t_list;
 
-char *ft_strcat(char *dest, const char *src);
-int token_counter(char *str);
-char **split_quotes(char *str, int *token_count);
-char **split_noquotes(int argc, char **argv, int *token_count);
-int has_duplicate(t_stack *stack, int value);
-int is_within_int(const char *str);
-void free_tokens(char **tokens, int count);
-int push(t_list **dest, t_list **src);
+void stack_index(t_list **stack);
 
-void rotate(t_stack *stack);
+t_list	*ft_lstnew(int value);
+int	ft_lstsize(t_list *head);
+t_list	*ft_lstlast(t_list *head);
+void	ft_lstadd_front(t_list **stack, t_list *new);
+void	ft_lstadd_back(t_list **stack, t_list *new);
+
+int push(t_list **dest, t_list **src);
 int sa(t_list **stackA);
-int sb(t_stack **stackB)
+int sb(t_list **stackB);
 int ss(t_list **stackA, t_list **stackB);
 int pa(t_list **stackA, t_list **stackB);
 int pb(t_list **stackA, t_list **stackB);
@@ -32,9 +33,14 @@ int  rra(t_list **stackA);
 int  rrb(t_list **stackB);
 int rrr(t_list **stackA, t_list **stackB);
 
-void radixSort(t_stack *stackA, t_stack *stackB);
+void simpleSort(t_list **stackA, t_list **stackB);
+void radixSort(t_list **stackA, t_list **stackB);
 
+int find_distance(t_list **stack, int index);
 int ft_issorted(t_list **stack);
+void ft_free(char **str);
+void stack_index(t_list **stack);
+void throw_error(char *str);
 
 void stack_index(t_list **stack);
 

@@ -44,7 +44,7 @@ int ra(t_list **stackA)
 
 int rb(t_list **stackB)
 {
-    if (rotate(stackB) == -1);
+    if (rotate(stackB) == -1)
         return (-1);
     ft_printf("rb\n");
     return (0);
